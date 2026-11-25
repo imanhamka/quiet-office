@@ -11,6 +11,8 @@ import fs from 'node:fs/promises';
 const TOLERANCE_MS = 5000;
 const RETRY_MS = 30_000;
 const READ_TIMEOUT_MS = 5000;
+// A cold PowerShell start takes over 5 s on slow or busy Windows machines.
+const WINDOWS_READ_TIMEOUT_MS = 15_000;
 const FILETIME_EPOCH_MS = 11_644_473_600_000;
 const MS_MIN = Date.UTC(2000, 0, 1);
 const MS_MAX = Date.UTC(2100, 0, 1);
@@ -105,7 +107,7 @@ export async function readWindowsStartTimes(pids) {
   const script =
     `Get-Process -Id ${list.join(',')} -ErrorAction SilentlyContinue | ForEach-Object { ` +
     `try { $t = $_.StartTime; if ($t) { [string]$_.Id + '=' + [string]$t.ToFileTimeUtc() } } catch {} }`;
-  const stdout = await run('powershell.exe', ['-NoProfile', '-NonInteractive', '-Command', script], { windowsHide: true });
+  const stdout = await run('powershell.exe', ['-NoProfile', '-NonInteractive', '-Command', script], { windowsHide: true, timeout: WINDOWS_READ_TIMEOUT_MS });
   for (const line of stdout.split(/\r?\n/)) {
     const m = /^(\d+)=(\d+)$/.exec(line.trim());
     if (!m) continue;
