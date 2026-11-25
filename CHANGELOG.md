@@ -7,6 +7,20 @@ The project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-11-25
+
+### Fixed
+
+- Windows: the process start-time read waits up to 15 s. A cold PowerShell start passed the old 5 s limit, so pid-reuse checks gave no verdict and were retried every 30 s.
+- Linux host: downloads are cancelled.
+- Windows host: `node` is resolved to an absolute path from `PATH` at startup.
+
+### Changed
+
+- Bumped `@xterm/addon-fit` to 0.11.0.
+- Furniture ids in the layout editor come from `crypto.randomUUID`.
+- Docs: the WebView2 profile directory is listed under what Quiet Office writes. The full OFL 1.1 text ships next to the bundled font.
+
 ## [1.0.0] - 2026-11-25
 
 ### Added
@@ -26,5 +40,6 @@ The project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Linux host (experimental): Python 3 + GTK 3 + WebKit2GTK 4.1, X11 and wlroots/KDE Wayland (layer-shell), tray icon.
 - Demo mode (`?wallpaper=1&demo=1`) with fixture agents.
 
-[Unreleased]: https://github.com/imanhamka/quiet-office/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/imanhamka/quiet-office/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/imanhamka/quiet-office/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/imanhamka/quiet-office/releases/tag/v1.0.0
