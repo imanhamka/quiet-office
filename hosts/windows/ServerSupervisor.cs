@@ -19,10 +19,23 @@ internal sealed class ServerSupervisor : IDisposable
     int backoffMs = 2000;
     bool disposed;
 
+    /// <summary>The absolute path of an executable found on PATH, so the server runs the node seen at
+    /// startup rather than whatever a later PATH or working-directory lookup would pick.</summary>
+    static string? ResolveOnPath(string exe)
+    {
+        foreach (var dir in (Environment.GetEnvironmentVariable("PATH") ?? "").Split(Path.PathSeparator))
+        {
+            if (string.IsNullOrWhiteSpace(dir) || !Path.IsPathRooted(dir.Trim())) continue;
+            var candidate = Path.Combine(dir.Trim(), exe);
+            if (File.Exists(candidate)) return candidate;
+        }
+        return null;
+    }
+
     public ServerSupervisor(string? script, string? node, int port, HttpClient http)
     {
         this.script = script;
-        this.node = string.IsNullOrWhiteSpace(node) ? "node" : node;
+        this.node = string.IsNullOrWhiteSpace(node) ? ResolveOnPath("node.exe") ?? "node" : node;
         this.port = port;
         this.http = http;
         ui = SynchronizationContext.Current ?? new WindowsFormsSynchronizationContext();

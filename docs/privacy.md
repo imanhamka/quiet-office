@@ -54,6 +54,7 @@ The hosts also read process names to detect screen sharing (`privacy.autoProcess
 | Host settings | macOS: `defaults` domain `io.github.imanhamka.quiet-office`. Linux: `${XDG_CONFIG_HOME:-~/.config}/quiet-office/host-state.json` (0600). Windows: `%APPDATA%\quiet-office\host-state.json`. |
 | Logs | macOS `~/Library/Logs/quiet-office/`, Linux `${XDG_STATE_HOME:-~/.local/state}/quiet-office/`, Windows `%LOCALAPPDATA%\quiet-office\logs\`. |
 | Single-instance lock | macOS: `$TMPDIR/io.github.imanhamka.quiet-office.host.lock`. Linux: `quiet-office-host-<uid>.lock` in `$XDG_RUNTIME_DIR` (else the temp directory). Windows: a named mutex, no file. |
+| Web view data | macOS and Linux: none (non-persistent, in memory). Windows: the WebView2 profile at `%LOCALAPPDATA%\quiet-office\webview2\` (cache and local storage of the local page only). |
 | Service files | Written by the install scripts only: LaunchAgents, systemd user unit, XDG autostart, HKCU `Run` key. |
 
 `config.json` belongs to you. Quiet Office reads it and never writes it.

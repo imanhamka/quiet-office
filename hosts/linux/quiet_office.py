@@ -471,6 +471,7 @@ class Host:
         self.display = Gdk.Display.get_default()
 
         self.context = WebKit2.WebContext.new_ephemeral()  # nothing persists: no cookies, storage, disk cache
+        self.context.connect("download-started", lambda _ctx, download: download.cancel())
         # No memory cache either, so a rebuilt layout or sprite shows on the next reload.
         self.context.set_cache_model(WebKit2.CacheModel.DOCUMENT_VIEWER)
         manager = self.context.get_website_data_manager()

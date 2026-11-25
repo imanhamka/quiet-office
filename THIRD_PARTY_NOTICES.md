@@ -82,4 +82,4 @@ CC0 asks for no attribution. Quiet Office credits the author anyway.
 
 - File: `web/pixel-agents/webview-ui/public/fonts/FSPixelSansUnicode-Regular.ttf`, shipped unmodified from pixel-agents.
 - Copyright NZWStudios2024, 2025. Made with FontStruct: https://fontstruct.com/fontstructions/show/2606508/fs-pixel-sans-unicode-regular
-- Licence: SIL Open Font License 1.1, as stated in the font's own name table. Full text: https://openfontlicense.org/open-font-license-official-text/
+- Licence: SIL Open Font License 1.1, as stated in the font's own name table. The full licence text ships next to the font: `web/pixel-agents/webview-ui/public/fonts/OFL.txt`.
