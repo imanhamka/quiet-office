@@ -236,7 +236,7 @@ function groupFits(
 export function freshFurnitureUid(taken: Set<string>): string {
   let uid: string;
   do {
-    uid = `f-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
+    uid = `f-${Date.now()}-${crypto.randomUUID().slice(0, 4)}`;
   } while (taken.has(uid));
   taken.add(uid);
   return uid;
