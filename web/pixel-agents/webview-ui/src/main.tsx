@@ -1,0 +1,30 @@
+import './index.css';
+// Bundled by Vite into the SPA's own CSS — the standalone server must serve
+// every asset itself (no CDN).
+import '@xterm/xterm/css/xterm.css';
+
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+
+import App from './App.tsx';
+import { isBrowserRuntime } from './runtime';
+import { installWallpaper } from './wallpaper';
+
+async function main() {
+  // browserMock is for Vite dev mode only (UI prototyping without a server).
+  // In standalone server mode, assets are loaded server-side and sent over WebSocket.
+  // quiet-office: production too — the wallpaper server sends no assets, so the
+  // page decodes them itself from assets/ (CONTRACT.md).
+  installWallpaper();
+  if (isBrowserRuntime) {
+    const { initBrowserMock } = await import('./browserMock.js');
+    await initBrowserMock();
+  }
+  createRoot(document.getElementById('root')!).render(
+    <StrictMode>
+      <App />
+    </StrictMode>,
+  );
+}
+
+main().catch(console.error);

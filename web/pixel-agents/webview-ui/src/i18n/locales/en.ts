@@ -1,0 +1,36 @@
+import type { Locale } from '../locale.js';
+
+export const en: Locale = {
+  thinking: 'Thinking',
+  toolError: 'error',
+  hourSuffix: 'h',
+  subtaskPrefix: 'Subtask:',
+  statusExact: {
+    'Running command': 'Running command',
+    'Searching code': 'Searching code',
+    'Searching files': 'Searching files',
+    'Fetching web content': 'Fetching web content',
+    'Searching the web': 'Searching the web',
+    'Running subtask': 'Subtask',
+    Subtask: 'Subtask',
+    'Waiting for your answer': 'Waiting for your answer',
+    Planning: 'Planning',
+    'Updating todos': 'Updating todos',
+    'Needs approval': 'NEEDS APPROVAL',
+    'Waiting for input': 'Waiting for input',
+    Idle: 'Idle',
+  },
+  statusPrefixes: {
+    'Reading ': 'Reading ',
+    'Editing ': 'Editing ',
+    'Writing ': 'Writing ',
+    'Using ': 'Using ',
+  },
+  boardActive: ['ACTIVE', 'ACT'],
+  boardIdle: ['IDLE', 'IDLE'],
+  boardSub: ['SUB', 'SUB'],
+  boardSessions: ['SESSIONS', 'SESS'],
+  boardToday: 'TODAY',
+  signBusy: 'BUSY',
+  signFree: 'FREE',
+};

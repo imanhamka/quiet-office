@@ -1,0 +1,36 @@
+import type { Locale } from '../locale.js';
+
+export const ms: Locale = {
+  thinking: 'Berfikir',
+  toolError: 'ralat',
+  hourSuffix: 'j',
+  subtaskPrefix: 'Subtugas:',
+  statusExact: {
+    'Running command': 'Jalan arahan',
+    'Searching code': 'Cari kod',
+    'Searching files': 'Cari fail',
+    'Fetching web content': 'Ambil laman web',
+    'Searching the web': 'Cari di web',
+    'Running subtask': 'Subtugas',
+    Subtask: 'Subtugas',
+    'Waiting for your answer': 'Tunggu jawapan',
+    Planning: 'Merancang',
+    'Updating todos': 'Kemas senarai tugas',
+    'Needs approval': 'PERLU KELULUSAN',
+    'Waiting for input': 'Tunggu arahan',
+    Idle: 'Rehat',
+  },
+  statusPrefixes: {
+    'Reading ': 'Baca ',
+    'Editing ': 'Sunting ',
+    'Writing ': 'Tulis ',
+    'Using ': 'Guna ',
+  },
+  boardActive: ['AKTIF', 'AKTIF'],
+  boardIdle: ['REHAT', 'REHAT'],
+  boardSub: ['SUB', 'SUB'],
+  boardSessions: ['SESI', 'SESI'],
+  boardToday: 'HARI INI',
+  signBusy: 'SIBUK',
+  signFree: 'KOSONG',
+};

@@ -1,0 +1,27 @@
+# Dependencies and build output
+node_modules/
+dist/
+build/
+bin/
+obj/
+web/dist/
+hosts/macos/build/
+*.app/
+*.zip
+
+# Logs, secrets, local data
+*.log
+.env
+.env.*
+*.jsonl
+
+# Captures (only demo-mode media under docs/media/ are tracked)
+screenshot*
+!docs/media/screenshot-*.png
+
+# OS and tool cruft
+.DS_Store
+__pycache__/
+*.pyc
+.vs/
+*.user

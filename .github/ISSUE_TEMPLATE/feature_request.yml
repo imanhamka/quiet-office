@@ -1,0 +1,41 @@
+name: Feature request
+description: Suggest an idea for Quiet Office.
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Quiet Office stays read-only: no hooks, no writes to Claude Code, no input to sessions, no network beyond 127.0.0.1.
+        Requests that need any of those will be declined.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What do you want to see or do that you cannot today?
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: Proposed solution
+      description: How it could look or work.
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Office page (art, animation, layout)
+        - Server (data from Claude Code)
+        - macOS host
+        - Windows host
+        - Linux host
+        - Docs
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered

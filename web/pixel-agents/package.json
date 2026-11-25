@@ -1,0 +1,28 @@
+{
+  "name": "quiet-office-web",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Quiet Office wallpaper page: a trimmed fork of the pixel-agents v1.6.0 webview (MIT)",
+  "license": "MIT",
+  "type": "module",
+  "workspaces": [
+    "webview-ui"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "npm run build -w webview-ui",
+    "test": "npm test -w webview-ui",
+    "lint": "eslint core && npm run lint -w webview-ui",
+    "typecheck": "tsc -p tsconfig.json && npm run typecheck -w webview-ui"
+  },
+  "devDependencies": {
+    "@types/node": "26.x",
+    "eslint": "^10.8.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-simple-import-sort": "^14.0.0",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.58.2"
+  }
+}

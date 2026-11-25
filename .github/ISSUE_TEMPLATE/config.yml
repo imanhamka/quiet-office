@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security vulnerability
+    url: https://github.com/imanhamka/quiet-office/security/advisories/new
+    about: Report security bugs privately. Do not open a public issue.

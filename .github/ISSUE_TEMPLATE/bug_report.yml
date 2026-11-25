@@ -1,0 +1,73 @@
+name: Bug report
+description: Something does not work as documented.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report. Before you paste anything, **redact agent names, project names, paths and file names**.
+        Logs and `/state` output contain them. Screenshots must use demo mode (`?wallpaper=1&demo=1`).
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options:
+        - macOS
+        - Windows
+        - Linux (X11)
+        - Linux (Wayland, wlroots or KDE)
+        - Linux (other)
+    validations:
+      required: true
+  - type: input
+    id: os-version
+    attributes:
+      label: OS version
+      placeholder: "macOS 15.2, Windows 11 24H2, Ubuntu 24.04 with Sway 1.10"
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: Quiet Office, Node.js and Claude Code versions
+      placeholder: "Quiet Office 1.0.0 (or commit), node 22.12.0, Claude Code 2.1.x"
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What you did, what you expected, what you saw instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Start two sessions
+        2. Approve a tool in one
+        3. ...
+  - type: textarea
+    id: host-log
+    attributes:
+      label: Host log excerpt (redacted)
+      description: |
+        macOS `~/Library/Logs/quiet-office/`, Linux `~/.local/state/quiet-office/`, Windows `%LOCALAPPDATA%\quiet-office\logs\`.
+        Paste only the lines around the error. Replace agent names with `agent-1`, `agent-2`.
+      render: text
+  - type: textarea
+    id: state
+    attributes:
+      label: "`/state` output (redacted)"
+      description: "`curl -s http://127.0.0.1:47100/state`. Replace agent names and file names."
+      render: json
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: I removed agent names, project names, paths and file names from everything above.
+          required: true
+        - label: Any screenshot uses demo mode, not my real sessions.
+          required: false

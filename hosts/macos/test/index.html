@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Quiet Office host test</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #141216; color: #d8d2e0; font: 28px/1.4 ui-monospace, Menlo, monospace; }
+  #box { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); text-align: center; }
+  #dot { width: 24px; height: 24px; border-radius: 50%; background: #7fd07f; margin: 16px auto; }
+</style>
+</head>
+<body>
+<div id="box">
+  <div>Quiet Office host test page</div>
+  <div id="dot"></div>
+  <div id="stats">starting</div>
+</div>
+<script>
+// Test double for the page side of the host contract: window.__wallpaper.pause()/resume(fps),
+// setInsets(t,r,b,l), setOptions({privacy, daypart, lang}).
+// With &navtest=1 it also tries to leave 127.0.0.1 and to open a window; the host must refuse both.
+const q = new URLSearchParams(location.search);
+const counts = { pause: 0, resume: 0, frames: 0, fps: 0, lastResumeFps: null, paused: false,
+                 wallpaper: q.get('wallpaper'), screen: q.get('screen'), lang: q.get('lang'),
+                 insets: null, options: null, href: location.href, opened: null };
+window.__testCounts = counts;
+
+let raf = 0, frameInWindow = 0, lastDraw = 0, windowStart = performance.now();
+function frame(t) {
+  raf = 0;
+  if (counts.paused) return;
+  const minGap = 1000 / (counts.lastResumeFps || 20);
+  if (t - lastDraw >= minGap - 1) {
+    lastDraw = t;
+    counts.frames++;
+    frameInWindow++;
+    document.getElementById('dot').style.opacity = (Math.sin(t / 300) + 1) / 2;
+  }
+  raf = requestAnimationFrame(frame);
+}
+function start() { if (!raf) raf = requestAnimationFrame(frame); }
+
+window.__wallpaper = {
+  pause() { counts.pause++; counts.paused = true; if (raf) { cancelAnimationFrame(raf); raf = 0; } },
+  resume(fps) { counts.resume++; counts.lastResumeFps = fps; counts.paused = false; start(); },
+  setInsets(t, r, b, l) { counts.insets = [t, r, b, l].join(','); },
+  setOptions(o) { counts.options = o; },
+};
+
+if (q.get('navtest') === '1') {
+  setTimeout(() => {
+    try { counts.opened = window.open('https://example.com/') === null ? 'null' : 'window'; } catch (e) { counts.opened = 'threw'; }
+    location.href = 'https://example.com/';
+  }, 1500);
+}
+
+function report() {
+  const now = performance.now();
+  counts.fps = Math.round(frameInWindow * 1000 / (now - windowStart));
+  frameInWindow = 0; windowStart = now;
+  document.getElementById('stats').textContent =
+    `screen=${counts.screen} fps=${counts.fps} frames=${counts.frames} pause=${counts.pause} resume=${counts.resume} paused=${counts.paused} visibility=${document.visibilityState}`;
+  counts.href = location.href;
+  const msg = JSON.stringify(Object.assign({ visibility: document.visibilityState }, counts));
+  if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.wp) {
+    window.webkit.messageHandlers.wp.postMessage(msg);
+  } else {
+    console.log(msg);
+  }
+}
+setInterval(report, 2000);
+start();
+</script>
+</body>
+</html>
