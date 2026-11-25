@@ -396,9 +396,12 @@ describe('end-of-day whiteboard', () => {
   });
 
   /** Furniture instances follow the layout order (every type is in the catalog). */
+  // Found by position: os.furniture also holds decor instances, so its order is not the layout's.
   function board(os: OfficeState): SpriteData {
-    const i = os.layout.furniture.findIndex((f) => f.type === 'WHITEBOARD');
-    return os.furniture[i].sprite;
+    const wb = os.layout.furniture.find((f) => f.type === 'WHITEBOARD')!;
+    const inst = os.furniture.filter((f) => f.x === wb.col * 16 && f.y === wb.row * 16);
+    assert.equal(inst.length, 1, 'one instance at the whiteboard tile');
+    return inst[0].sprite;
   }
 
   test('evening + stats: the day board; daytime or no stats: live counts; redraw only on change', () => {
