@@ -356,7 +356,8 @@ export class OfficeState {
   private wpAllDonePending: number | null = null;
   /** Agents stretching before the walk to the lounge ("all done"). */
   private wpStretch = new Map<number, { timer: number }>();
-  /** wpTime at which the dim ends, or null. */
+  /** Wall-clock time (wpNow, ms) at which the dim ends, or null. Wall clock, not wpTime: the
+   *  loop stops while the wallpaper is covered, and the dim must not outlast its minute. */
   private wpDimUntil: number | null = null;
   private wpDim: { sprite: SpriteData; x: number; y: number } | null = null;
   private wpRecCache: { seats: Map<string, Seat>; layout: OfficeLayout; uid: string | null } | null = null;
@@ -2619,7 +2620,7 @@ export class OfficeState {
       this.wpAllDonePending = null;
       if (recent) this.wpStartAllDone();
     }
-    if (this.wpDimUntil !== null && this.wpTime >= this.wpDimUntil) {
+    if (this.wpDimUntil !== null && this.wpNow() >= this.wpDimUntil) {
       this.wpDimUntil = null;
       this.rebuildFurnitureInstances();
     }
@@ -2639,7 +2640,7 @@ export class OfficeState {
       ch.path = ch.moveProgress > 0 && ch.path.length > 0 ? [ch.path[0]] : [];
       this.wpStretch.set(ch.id, { timer: 0 });
     }
-    this.wpDimUntil = this.wpTime + ALL_DONE_DIM_SEC;
+    this.wpDimUntil = this.wpNow() + ALL_DONE_DIM_SEC * 1000;
     this.rebuildFurnitureInstances();
   }
 

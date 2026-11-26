@@ -11,6 +11,10 @@ The project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - Release notes come from this file.
 
+### Fixed
+
+- The all-done dim ends one minute after it starts by the clock. It used loop time, which stops while the wallpaper is covered, so the office stayed dark each time the desktop showed again.
+
 ## [1.0.1] - 2026-11-25
 
 ### Fixed

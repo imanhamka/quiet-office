@@ -305,6 +305,17 @@ describe('all done', () => {
     assert.ok(!os.isStretching(1));
   });
 
+  test('the dim ends a minute later by the clock, even if the loop was paused (wallpaper covered)', () => {
+    const { os, clock } = team();
+    clock.t += ALL_DONE_WORK_MS;
+    finish(os);
+    run(os, clock, 0.2);
+    assert.ok(os.isAllDoneDimmed() && dimmed(os));
+    clock.t += (ALL_DONE_DIM_SEC + 5) * 1000; // covered: no updates for over a minute
+    os.update(0.1); // the first frame after it shows again
+    assert.ok(!os.isAllDoneDimmed() && !dimmed(os), 'not dim on the first visible frame');
+  });
+
   test('once per work period: a short new period after it does not fire again', () => {
     const { os, clock } = team();
     clock.t += ALL_DONE_WORK_MS;
